@@ -1,0 +1,57 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UdemyMAUIContacts.Views.Controls.ContactControl"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+  <VerticalStackLayout
+    BackgroundColor="AliceBlue"
+    Padding="10">
+    <Label x:Name="ContactIdLabel" />
+    <Frame
+      Padding="10,10,10,10"
+      HorizontalOptions="Center"
+      BackgroundColor="Beige"
+      WidthRequest="200">
+      <HorizontalStackLayout Spacing="10">
+        <Label Text="Name:" VerticalOptions="Center" />
+        <Entry x:Name="NameEntry" VerticalOptions="Center" >
+          <Entry.Behaviors>
+            <toolkit:TextValidationBehavior
+              x:Name="NameValidator"
+              MinimumLength="1"
+              Flags="ValidateOnAttaching,ValidateOnValueChanged"
+              />
+
+          </Entry.Behaviors>
+        </Entry>
+      </HorizontalStackLayout>
+    </Frame>
+    <HorizontalStackLayout>
+      <Label Text="Email" VerticalOptions="Center" />
+      <Entry x:Name="EmailEntry" VerticalOptions="Center" >
+        <Entry.Behaviors>
+          <toolkit:MultiValidationBehavior
+            x:Name="EmailValidator"
+            Flags="ValidateOnAttaching,ValidateOnValueChanged">
+            <toolkit:TextValidationBehavior
+              MinimumLength="1"
+              toolkit:MultiValidationBehavior.Error="Email is required"/>
+            <toolkit:EmailValidationBehavior
+              toolkit:MultiValidationBehavior.Error="email format is invalid"
+              />
+          </toolkit:MultiValidationBehavior>
+        </Entry.Behaviors>
+      </Entry>
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Label Text="Phone" VerticalOptions="Center" />
+      <Entry x:Name="PhoneEntry" VerticalOptions="Center" />
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Label Text="Address" VerticalOptions="Center" />
+      <Entry x:Name="AddressEntry" VerticalOptions="Center" />
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Button x:Name="CancelButton" Clicked="CancelButton_OnClicked" Text="Cancel"></Button>
+      <Button x:Name="SaveButton" Clicked="SaveButton_OnClicked" Text="Save"></Button></HorizontalStackLayout>
+  </VerticalStackLayout>
+</ContentView>

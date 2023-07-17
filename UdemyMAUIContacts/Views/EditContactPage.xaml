@@ -1,0 +1,11 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UdemyMAUIContacts.Views.EditContactPage"
+             xmlns:controls="clr-namespace:UdemyMAUIContacts.Views.Controls"
+             Title="Edit Contact">
+  <controls:ContactControl x:Name="ContactCtrl"
+    OnSave="SaveButton_OnClicked"
+    OnCancel="CancelButton_OnClicked"
+    OnError="ContactCtrl_OnError"
+                           />
+</ContentPage>
