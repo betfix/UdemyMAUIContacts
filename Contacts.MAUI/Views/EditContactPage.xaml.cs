@@ -1,18 +1,19 @@
 using Contacts.UseCases.Interfaces;
-using UdemyMAUIContacts.Models;
-using Contact = Contacts.Core.Contact;
+using Contact=Contacts.Core.ContactEntity;
 
-namespace UdemyMAUIContacts.Views;
+namespace Contacts.MAUI.Views;
 
 [QueryProperty(nameof(ContactId), "Id")]
 public partial class EditContactPage : ContentPage
 {
 	private readonly IViewContactUseCase _viewContactUseCase;
+	private readonly IEditContactUseCase _editContactUseCase;
 
 
-	public EditContactPage(IViewContactUseCase viewContactUseCase)
+	public EditContactPage(IViewContactUseCase viewContactUseCase, IEditContactUseCase editContactUseCase)
 	{
 		_viewContactUseCase = viewContactUseCase;
+		_editContactUseCase = editContactUseCase;
 		InitializeComponent();
 	}
 
@@ -36,9 +37,9 @@ public partial class EditContactPage : ContentPage
 		} 
 	}
 
-	private void SaveButton_OnClicked(object sender, EventArgs e)
+	private async void SaveButton_OnClicked(object sender, EventArgs e)
 	{
-		var contact = new UdemyMAUIContacts.Models.Contact()
+		var contact = new Contact()
 		{
 			ContactId = ContactCtrl.ContactId,
 			Name = ContactCtrl.Name,
@@ -47,9 +48,9 @@ public partial class EditContactPage : ContentPage
 			Address = ContactCtrl.Address,
 		};
 
-		ContactRepository.UpdateContact(contact.ContactId, contact);
+		await _editContactUseCase.ExecuteAsync(contact.ContactId, contact);
 		
-		Shell.Current.GoToAsync("..");
+		await Shell.Current.GoToAsync("..");
 	}
 
 

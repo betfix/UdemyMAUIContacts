@@ -1,8 +1,6 @@
 ﻿#pragma warning disable IDE0046
 
-using Contact = Contacts.Core.Contact;
-
-namespace UdemyMAUIContacts.Models
+namespace Contacts.MAUI.Models
 {
 	public static class ContactRepository
 	{

@@ -29,6 +29,7 @@ resharper_convert_if_statement_to_conditional_ternary_expression_highlighting=no
 dotnet_diagnostic.ide0045.severity=none
 dotnet_diagnostic.ide0011.severity=none
 dotnet_diagnostic.ide0021.severity=none
+dotnet_diagnostic.ide2000.severity=none
 
 # ReSharper properties
 resharper_csharp_indent_style=tab

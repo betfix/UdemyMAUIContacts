@@ -1,13 +1,18 @@
 using System.Collections.ObjectModel;
+using Contacts.UseCases.Interfaces;
 using UdemyMAUIContacts.Models;
-using Contact = UdemyMAUIContacts.Models.Contact;
+using Contact = Contacts.Core.Contact;
 
 namespace UdemyMAUIContacts.Views;
 
 public partial class ContactsPage : ContentPage
 {
-	public ContactsPage()
+	private readonly IViewContactsUseCase _viewContactsUseCase;
+
+
+	public ContactsPage(IViewContactsUseCase viewContactsUseCase)
 	{
+		_viewContactsUseCase = viewContactsUseCase;
 		InitializeComponent();
 	}
 
@@ -17,9 +22,9 @@ public partial class ContactsPage : ContentPage
 		LoadContacts();
 	}
 
-	private void LoadContacts()
+	private async void LoadContacts()
 	{
-		ContactsList.ItemsSource = new ObservableCollection<Contact>(ContactRepository.Contacts);
+		ContactsList.ItemsSource = new ObservableCollection<Contact>(await _viewContactsUseCase.ExecuteAsync());
 		Search.Text = "";
 	}
 
@@ -50,11 +55,11 @@ public partial class ContactsPage : ContentPage
 		LoadContacts();
 	}
 
-	private void Search_OnTextChanged(object? sender, TextChangedEventArgs e)
+	private async void Search_OnTextChanged(object? sender, TextChangedEventArgs e)
 	{
 		if ( sender is not SearchBar searchBar )
 			return;
-		ContactsList.ItemsSource = new ObservableCollection<Contact>(
-			ContactRepository.SearchContacts(searchBar.Text));
+		ContactsList.ItemsSource = new ObservableCollection<Contact>(await _viewContactsUseCase.ExecuteAsync(searchBar.Text));
+		
 	}
 }
