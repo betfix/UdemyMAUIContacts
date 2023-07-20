@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
@@ -57,6 +58,12 @@
 	  <ProjectReference Include="..\Contacts.Core\Contacts.Core.csproj" />
 	  <ProjectReference Include="..\Contacts.UseCases\Contacts.UseCases.csproj" />
 	  <ProjectReference Include="..\Plugins\Contacts.Plugins.DataStore.InMemory\Contacts.Plugins.DataStore.InMemory.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views_MVVM\Contacts_MVVM_Page.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

@@ -30,9 +30,9 @@ public partial class ContactsPage : ContentPage
 
 	private async void LoadContacts()
 	{
-		ContactsList.ItemsSource =
+		contactsList.ItemsSource =
 			new ObservableCollection<ContactEntity>(await _viewContactsUseCase.ExecuteAsync());
-		Search.Text = "";
+		search.Text = "";
 	}
 
 
@@ -71,7 +71,7 @@ public partial class ContactsPage : ContentPage
 	{
 		if ( sender is not SearchBar searchBar )
 			return;
-		ContactsList.ItemsSource =
+		contactsList.ItemsSource =
 			new ObservableCollection<ContactEntity>(await _viewContactsUseCase.ExecuteAsync(searchBar.Text));
 	}
 
