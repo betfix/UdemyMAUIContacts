@@ -6,7 +6,6 @@ namespace Contacts.MAUI.Views_MVVM;
 public partial class Contacts_MVVM_Page : ContentPage
 {
 	private readonly ContactsViewModel _contactsViewModel;
-	private ContactEntity? _selectedContact;
 
 	public Contacts_MVVM_Page(ContactsViewModel contactsViewModel)
 	{
@@ -15,12 +14,9 @@ public partial class Contacts_MVVM_Page : ContentPage
 		BindingContext = _contactsViewModel;
 	}
 
-
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
 		await _contactsViewModel.LoadContactsAsync();
 	}
-
-
 }

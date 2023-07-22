@@ -13,7 +13,7 @@ public class ViewContactUseCase : IViewContactUseCase
 		_repo = repo;
 	}
 
-	public async Task<ContactEntity>? ExecuteAsync(int id)
+	public async Task<ContactEntity?> ExecuteAsync(int id)
 	{
 		return await _repo.GetByIdAsync(id);
 	}

@@ -4,5 +4,5 @@ namespace Contacts.UseCases.Interfaces;
 
 public interface IViewContactUseCase
 {
-		Task<ContactEntity>? ExecuteAsync(int id);
+		Task<ContactEntity?> ExecuteAsync(int id);
 }

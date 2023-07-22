@@ -16,6 +16,5 @@ public class DeleteContactUseCase : IDeleteContactUseCase
 	public async Task ExecuteAsync(int id)
 	{
 		await _repo.DeleteAsync(id);
-		var a = "1";
 	}
 }

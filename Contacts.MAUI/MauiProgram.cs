@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+
 using Contacts.MAUI.ViewModels;
 using Contacts.MAUI.Views;
 using Contacts.MAUI.Views_MVVM;
@@ -6,6 +7,7 @@ using Contacts.Plugins.DataStore.InMemory;
 using Contacts.UseCases;
 using Contacts.UseCases.Interfaces;
 using Contacts.UseCases.PluginInterfaces;
+
 using Microsoft.Extensions.Logging;
 
 namespace Contacts.MAUI;
@@ -36,12 +38,15 @@ public static class MauiProgram
 		builder.Services.AddTransient<IAddContactUseCase, AddContactUseCase>();
 		builder.Services.AddTransient<IDeleteContactUseCase, DeleteContactUseCase>();
 
+		builder.Services.AddTransient<ContactsViewModel>();
+		builder.Services.AddTransient<ContactViewModel>();
+
 		builder.Services.AddSingleton<ContactsPage>();
 		builder.Services.AddTransient<EditContactPage>();
 		builder.Services.AddTransient<AddContactPage>();
 		builder.Services.AddTransient<Contacts_MVVM_Page>();
-
-		builder.Services.AddTransient<ContactsViewModel>();
+		builder.Services.AddTransient<EditContact_MVVM_Page>();
+		builder.Services.AddTransient<AddContact_MVVM_Page>();
 
 		var app = builder.Build();
 

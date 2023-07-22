@@ -1,0 +1,61 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="using:Contacts.MAUI.ViewModels"
+             x:Class="Contacts.MAUI.Views_MVVM.Controls.ContactControl_MVVM"
+             x:DataType="vm:ContactViewModel"
+             >
+  <VerticalStackLayout
+    BackgroundColor="AliceBlue"
+    Padding="10">
+    <Frame
+      Padding="10,10,10,10"
+      HorizontalOptions="Center"
+      BackgroundColor="Beige"
+      WidthRequest="200">
+      <HorizontalStackLayout Spacing="10">
+        <Label Text="Name:" VerticalOptions="Center" />
+        <Entry VerticalOptions="Center" Text="{Binding Contact.Name}">
+          <Entry.Behaviors>
+            <toolkit:TextValidationBehavior
+              x:Name="NameValidator"
+              MinimumLength="1"
+              Flags="ValidateOnAttaching,ValidateOnValueChanged"
+              />
+
+          </Entry.Behaviors>
+        </Entry>
+      </HorizontalStackLayout>
+    </Frame>
+    <HorizontalStackLayout>
+      <Label Text="Email" VerticalOptions="Center" />
+      <Entry VerticalOptions="Center" Text="{Binding Contact.Email}">
+        <Entry.Behaviors>
+          <toolkit:MultiValidationBehavior
+            x:Name="EmailValidator"
+            Flags="ValidateOnAttaching,ValidateOnValueChanged">
+            <toolkit:TextValidationBehavior
+              MinimumLength="1"
+              toolkit:MultiValidationBehavior.Error="Email is required"/>
+            <toolkit:EmailValidationBehavior
+              toolkit:MultiValidationBehavior.Error="email format is invalid"
+              />
+          </toolkit:MultiValidationBehavior>
+        </Entry.Behaviors>
+      </Entry>
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Label Text="Phone" VerticalOptions="Center" />
+      <Entry VerticalOptions="Center" Text="{Binding Contact.Phone}"/>
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Label Text="Address" VerticalOptions="Center" />
+      <Entry VerticalOptions="Center" Text="{Binding Contact.Address}"/>
+    </HorizontalStackLayout>
+    <HorizontalStackLayout>
+      <Button Text="Cancel" Command="{Binding BackToContactsCommand}"></Button>
+      <Button IsVisible="{Binding IsAddNewVisible}" Text="Add New" Command="{Binding AddContactCommand}"/>
+      <Button IsVisible="{Binding IsUpdateVisible}" Text="Update" Command="{Binding UpdateContactCommand}"/>
+    </HorizontalStackLayout>
+  </VerticalStackLayout>
+</ContentView>

@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Contacts.MAUI.ViewModels"
+             x:DataType="vm:ContactsViewModel"
              xmlns:core="clr-namespace:Contacts.Core;assembly=Contacts.Core"
              x:Class="Contacts.MAUI.Views_MVVM.Contacts_MVVM_Page"
              Title="Contacts_MVVM_Page">
@@ -13,22 +14,41 @@
                Grid.Column="0"
                Placeholder="Search Contacts">
     </SearchBar>
-    <CollectionView x:DataType="vm:ContactsViewModel"
+    <CollectionView x:Name="ContactsCollection"
       Grid.Row="1" Grid.Column="0"
       ItemsSource="{Binding Contacts}">
+
       <CollectionView.ItemTemplate>
         <DataTemplate x:DataType="core:ContactEntity">
-          <VerticalStackLayout Padding="10">
+
+          <VerticalStackLayout
+              BackgroundColor="Gray">
+            <FlyoutBase.ContextFlyout>
+              <MenuFlyout>
+                <MenuFlyoutItem 
+                  Text="Delete" 
+                  Command="{Binding Path=BindingContext.DeleteContactCommand, Source={x:Reference ContactsCollection}}" 
+                  CommandParameter="{Binding ContactId}"
+                  />
+                <MenuFlyoutItem 
+                  Text="Edit" 
+                  Command="{Binding Path=BindingContext.GoToEditContactCommand, Source={x:Reference ContactsCollection}}" 
+                  CommandParameter="{Binding ContactId}"
+                  />
+              </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
             <Label Text="{Binding Name}" />
             <Label Text="{Binding Email}" />
+            <Label Text="{Binding Phone}" />
+            <Label Text="{Binding Address}" />
           </VerticalStackLayout>
+
         </DataTemplate>
       </CollectionView.ItemTemplate>
     </CollectionView>
 
-    <Button x:Name="addBtn"
-            Grid.Row="2"
-            Grid.Column="0"
-            Text="Add Contact" />
+    <Button Grid.Row="2" Grid.Column="0"
+            Text="Add Contact" 
+            Command="{Binding GoToAddContact1Command}"/>
   </Grid>
 </ContentPage>
