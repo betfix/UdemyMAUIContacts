@@ -17,12 +17,15 @@ public partial class ContactViewModel : ObservableObject
 	public ContactEntity Contact { get => _contact; set => SetProperty(ref _contact, value); }
 	public bool IsAddNewVisible { get; set; }
 	public bool IsUpdateVisible { get; set; }
+	public bool IsNameProvided { get; set; }
+	public bool IsEmailProvided { get; set; }
+	public bool IsEmailFormatValid { get; set; }
 
 
 	public ContactViewModel(
-	IViewContactUseCase viewContactUseCase,
-	IEditContactUseCase editContactUseCase,
-	IAddContactUseCase addContactUseCase)
+		IViewContactUseCase viewContactUseCase,
+		IEditContactUseCase editContactUseCase,
+		IAddContactUseCase addContactUseCase)
 	{
 		_viewContactUseCase = viewContactUseCase;
 		_editContactUseCase = editContactUseCase;
@@ -40,6 +43,8 @@ public partial class ContactViewModel : ObservableObject
 	{
 		if ( Contact is null )
 			return;
+		if ( !await ValidateAsync() )
+			return;
 		await _editContactUseCase.ExecuteAsync(Contact.ContactId, Contact);
 		await Shell.Current.GoToAsync(nameof(Contacts_MVVM_Page));
 	}
@@ -49,6 +54,8 @@ public partial class ContactViewModel : ObservableObject
 	{
 		if ( Contact is null )
 			return;
+		if ( !await ValidateAsync() )
+			return;
 		await _addContactUseCase.ExecuteAsync(Contact);
 		await Shell.Current.GoToAsync(nameof(Contacts_MVVM_Page));
 	}
@@ -57,5 +64,29 @@ public partial class ContactViewModel : ObservableObject
 	public async Task BackToContactsAsync()
 	{
 		await Shell.Current.GoToAsync(nameof(Contacts_MVVM_Page));
+	}
+
+	private async Task<bool> ValidateAsync()
+	{
+		if ( !IsNameProvided )
+		{
+			await Shell.Current.DisplayAlert("Error", "Name is required", "OK");
+			//Application.Current.MainPage.DisplayAlert("Error", "Name is required", "OK");
+			return false;
+		}
+
+		if ( !IsEmailProvided )
+		{
+			await Shell.Current.DisplayAlert("Error", "Email is required", "OK");
+			return false;
+		}
+
+		if ( !IsEmailFormatValid )
+		{
+			await Shell.Current.DisplayAlert("Error", "Email format is not valid", "OK");
+			return false;
+		}
+
+		return true;
 	}
 }

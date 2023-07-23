@@ -10,6 +10,7 @@
     RowDefinitions="50,*,50"
     ColumnDefinitions="*">
     <SearchBar x:Name="search"
+               Text="{Binding FilterText}"
                Grid.Row="0"
                Grid.Column="0"
                Placeholder="Search Contacts">
